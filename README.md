@@ -9,7 +9,11 @@ The `agent_prompting.ipynb` notebook covers topics including:
 - system prompts and user prompts;
 - prompts as persistent agent constitutions;
 - the Persona, Task, Context, and Format (PTCF) framework;
-- task decomposition and structured reasoning; and
+- task decomposition and structured reasoning;
+- Chain-of-Thought (CoT) prompting for working through a problem as a sequential reasoning process;
+- Tree-of-Thoughts (ToT) prompting for exploring multiple reasoning branches and synthesizing their results;
+- a Multi-Agent Communication Protocol for structured collaboration between specialized agents;
+- production-oriented case studies covering SaaS support triage, financial compliance, and automated code review; and
 - defensive handling of LLM calls.
 
 ## Setup
@@ -40,10 +44,9 @@ API usage may incur charges from the configured model provider. Keep `.env` file
 
 ```text
 .
-├── agent_prompting.ipynb  # Starting notebook: the art of agent prompting
+├── agent_prompting.ipynb  # Prompting, CoT/ToT, multi-agent protocol, and use cases
 ├── utils.py               # Logging, API-key loading, and fallback helpers
-├── requirements.txt       # Python dependencies
-└── src/ai_agents/         # Package source for future agent implementations
+└── requirements.txt       # Python dependencies
 ```
 
 ## Credit
