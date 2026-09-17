@@ -1,54 +1,98 @@
 # Exploring AI Agents
 
-This repository documents my hands-on exploration of AI agents through practical notebooks and small experiments. The code starts with [`agent_prompting.ipynb`](./agent_prompting.ipynb), which explores how prompts define an agent's identity, constraints, reasoning approach, and output format.
+This repository contains hands-on notebooks and supporting utilities for learning how AI agents are prompted, deployed, made resilient, and extended with planning and memory. The examples are inspired by *30 Agents Every AI Engineer Must Build* and are designed to run either with OpenAI or, where supported, in a deterministic simulation mode.
 
-## Start here
+## What is included
 
-The `agent_prompting.ipynb` notebook covers topics including:
+| Area | Entry point | Topics | Status |
+|---|---|---|---|
+| Agent prompting | [`01-Agent-Prompting/agent_prompting.ipynb`](./01-Agent-Prompting/agent_prompting.ipynb) | Agent constitutions, system and user prompts, PTCF, decomposition, few-shot learning, Chain-of-Thought, Tree-of-Thoughts, and multi-agent communication | Ready |
+| Deployment and responsible development | [`02-Agent-Deployment-Responsible-Development/agent_deployment.ipynb`](./02-Agent-Deployment-Responsible-Development/agent_deployment.ipynb) | Cost tracking, budget enforcement, circuit breaking, input validation, security, fairness, and graceful degradation | Ready |
+| Autonomous decision-making | [`Autonoumus_Planning_Menmory_Agents/Autonomous Decision-Making Agent.ipynb`](./Autonoumus_Planning_Menmory_Agents/Autonomous%20Decision-Making%20Agent.ipynb) | Perception, strategy selection, safety checks, escalation, dependency-aware action execution, and learning | Ready |
+| Planning agent | [`PlanningAgent/planning_agent.ipynb`](./PlanningAgent/planning_agent.ipynb) | Hierarchical task decomposition, dependency resolution, execution monitoring, feedback, and plan revision | Ready |
+| Memory-augmented agent | [`memory_augmented_agent.ipynb`](./memory_augmented_agent.ipynb) | Working, episodic, and semantic memory; contextual retrieval; prompt enrichment; and a multi-turn healthcare example | Ready |
 
-- system prompts and user prompts;
-- prompts as persistent agent constitutions;
-- the Persona, Task, Context, and Format (PTCF) framework;
-- task decomposition and structured reasoning;
-- Chain-of-Thought (CoT) prompting for working through a problem as a sequential reasoning process;
-- Tree-of-Thoughts (ToT) prompting for exploring multiple reasoning branches and synthesizing their results;
-- a Multi-Agent Communication Protocol for structured collaboration between specialized agents;
-- production-oriented case studies covering SaaS support triage, financial compliance, and automated code review; and
-- defensive handling of LLM calls.
+The runnable notebooks include defensive fallbacks so demonstrations can continue when a live model call fails. The deployment and cognitive-agent examples also include local mock implementations for repeatable, API-free experimentation.
 
-## Setup
+## Quick start
 
-1. Clone the repository and enter the project directory.
-2. Create and activate a Python virtual environment.
+The project targets Python 3.12.
+
+1. Clone the repository and enter it.
+2. Create and activate a virtual environment:
+
+   ```bash
+   python3.12 -m venv .venv
+   source .venv/bin/activate
+   ```
+
 3. Install the dependencies:
 
    ```bash
-   pip install -r requirements.txt
+   python -m pip install --upgrade pip
+   python -m pip install -r requirements.txt
    ```
 
-4. Add your OpenAI API key to a `.env` file:
-
-   ```text
-   OPENAI_API_KEY=your_api_key_here
-   ```
-
-5. Start Jupyter and open the first notebook:
+4. Start Jupyter:
 
    ```bash
-   jupyter notebook agent_prompting.ipynb
+   jupyter notebook
    ```
 
-API usage may incur charges from the configured model provider. Keep `.env` files and API keys out of version control.
+5. Begin with [`01-Agent-Prompting/agent_prompting.ipynb`](./01-Agent-Prompting/agent_prompting.ipynb), then work through the other ready notebooks in the order shown above.
+
+## Live and simulation modes
+
+To use live OpenAI calls, create a `.env` file in the repository root:
+
+```text
+OPENAI_API_KEY=your_api_key_here
+```
+
+Do not commit this file. API usage may incur charges from the configured provider.
+
+If no key is available, notebooks with simulation support use their local `MockLLM` and mock data instead. The autonomous decision-making and planning notebooks also fall back to the mock client when a live OpenAI request fails.
 
 ## Project structure
 
 ```text
 .
-├── agent_prompting.ipynb  # Prompting, CoT/ToT, multi-agent protocol, and use cases
-├── utils.py               # Logging, API-key loading, and fallback helpers
-└── requirements.txt       # Python dependencies
+├── 01-Agent-Prompting/
+│   ├── agent_prompting.ipynb
+│   └── utils.py
+├── 02-Agent-Deployment-Responsible-Development/
+│   ├── agent_deployment.ipynb
+│   ├── agent_utils.py
+│   └── mock_llm.py
+├── Autonoumus_Planning_Menmory_Agents/
+│   ├── Autonomous Decision-Making Agent.ipynb
+│   ├── color_logger.py
+│   ├── mock_llm.py
+│   └── resilience.py
+├── PlanningAgent/
+│   ├── planning_agent.ipynb
+│   ├── color_logger.py
+│   ├── mock_llm.py
+│   └── resilience.py
+├── supporting/                  # Provider and environment-management helpers
+├── memory_augmented_agent.ipynb # Working, episodic, and semantic memory
+├── color_logger.py              # Logging used by the memory-agent notebook
+├── mock_llm.py                  # Mock LLM and in-memory vector database
+├── resilience.py                # Retry and fallback decorator
+├── pyproject.toml
+└── requirements.txt
 ```
+
+The cognitive-agent examples use a small set of supporting modules, colocated with the relevant notebook or available from the repository root:
+
+- `color_logger.py` provides readable, color-coded notebook output.
+- `mock_llm.py` supplies structured mock responses and an in-memory vector database.
+- `resilience.py` provides `@fail_gracefully`, including retries, exponential backoff, and fallback values.
+
+## Optional environment tooling
+
+The [`supporting/`](./supporting/) directory contains Ubuntu setup, verification, chapter-environment switching, and provider-detection utilities intended for the broader book workflow. See [`supporting/ENVIRONMENT_WORKFLOW_GUIDE.md`](./supporting/ENVIRONMENT_WORKFLOW_GUIDE.md) before using those scripts; the root virtual-environment setup above is sufficient for the notebooks currently included in this repository.
 
 ## Credit
 
-The learning path and examples in this repository are inspired by the book *30 Agents Every AI Engineer Must Build*.
+The learning path and examples in this repository are inspired by Imran Ahmad's book *30 Agents Every AI Engineer Must Build*.
