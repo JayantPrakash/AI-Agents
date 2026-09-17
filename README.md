@@ -8,9 +8,9 @@ This repository contains hands-on notebooks and supporting utilities for learnin
 |---|---|---|---|
 | Agent prompting | [`01-Agent-Prompting/agent_prompting.ipynb`](./01-Agent-Prompting/agent_prompting.ipynb) | Agent constitutions, system and user prompts, PTCF, decomposition, few-shot learning, Chain-of-Thought, Tree-of-Thoughts, and multi-agent communication | Ready |
 | Deployment and responsible development | [`02-Agent-Deployment-Responsible-Development/agent_deployment.ipynb`](./02-Agent-Deployment-Responsible-Development/agent_deployment.ipynb) | Cost tracking, budget enforcement, circuit breaking, input validation, security, fairness, and graceful degradation | Ready |
-| Autonomous decision-making | [`Autonoumus_Planning_Menmory_Agents/Autonomous Decision-Making Agent.ipynb`](./Autonoumus_Planning_Menmory_Agents/Autonomous%20Decision-Making%20Agent.ipynb) | Perception, strategy selection, safety checks, escalation, dependency-aware action execution, and learning | Ready |
-| Planning agent | [`PlanningAgent/planning_agent.ipynb`](./PlanningAgent/planning_agent.ipynb) | Hierarchical task decomposition, dependency resolution, execution monitoring, feedback, and plan revision | Ready |
-| Memory-augmented agent | [`memory_augmented_agent.ipynb`](./memory_augmented_agent.ipynb) | Working, episodic, and semantic memory; contextual retrieval; prompt enrichment; and a multi-turn healthcare example | Ready |
+| Autonomous decision-making | [`Agents/autonomous_decision_making_agent.ipynb`](./Agents/autonomous_decision_making_agent.ipynb) | Perception, strategy selection, safety checks, escalation, dependency-aware action execution, and learning | Ready |
+| Planning agent | [`Agents/planning_agent.ipynb`](./Agents/planning_agent.ipynb) | Hierarchical task decomposition, dependency resolution, execution monitoring, feedback, and plan revision | Ready |
+| Memory-augmented agent | [`Agents/memory_augmented_agent.ipynb`](./Agents/memory_augmented_agent.ipynb) | Working, episodic, and semantic memory; contextual retrieval; prompt enrichment; and a multi-turn healthcare example | Ready |
 
 The runnable notebooks include defensive fallbacks so demonstrations can continue when a live model call fails. The deployment and cognitive-agent examples also include local mock implementations for repeatable, API-free experimentation.
 
@@ -51,7 +51,7 @@ OPENAI_API_KEY=your_api_key_here
 
 Do not commit this file. API usage may incur charges from the configured provider.
 
-If no key is available, notebooks with simulation support use their local `MockLLM` and mock data instead. The autonomous decision-making and planning notebooks also fall back to the mock client when a live OpenAI request fails.
+If no key is available, notebooks with simulation support use `MockLLM` and mock data instead. The autonomous decision-making, planning, and memory-augmented notebooks also fall back to the shared mock client when a live OpenAI request fails.
 
 ## Project structure
 
@@ -64,26 +64,29 @@ If no key is available, notebooks with simulation support use their local `MockL
 │   ├── agent_deployment.ipynb
 │   ├── agent_utils.py
 │   └── mock_llm.py
-├── Autonoumus_Planning_Menmory_Agents/
-│   ├── Autonomous Decision-Making Agent.ipynb
-│   ├── color_logger.py
-│   ├── mock_llm.py
-│   └── resilience.py
-├── PlanningAgent/
-│   ├── planning_agent.ipynb
-│   ├── color_logger.py
-│   ├── mock_llm.py
-│   └── resilience.py
+├── Agents/
+│   ├── autonomous_decision_making_agent.ipynb # Autonomous decision-making agent
+│   ├── planning_agent.ipynb                    # Planning agent
+│   └── memory_augmented_agent.ipynb            # Memory-augmented agent
 ├── supporting/                  # Provider and environment-management helpers
-├── memory_augmented_agent.ipynb # Working, episodic, and semantic memory
-├── color_logger.py              # Logging used by the memory-agent notebook
-├── mock_llm.py                  # Mock LLM and in-memory vector database
-├── resilience.py                # Retry and fallback decorator
+├── color_logger.py              # Shared helper
+├── mock_llm.py                  # Shared helper
+├── resilience.py                # Shared helper
 ├── pyproject.toml
 └── requirements.txt
 ```
 
-The cognitive-agent examples use a small set of supporting modules, colocated with the relevant notebook or available from the repository root:
+### Agent notebooks
+
+These three notebooks implement different types of agents:
+
+- [`Agents/autonomous_decision_making_agent.ipynb`](./Agents/autonomous_decision_making_agent.ipynb) implements an autonomous decision-making agent.
+- [`Agents/planning_agent.ipynb`](./Agents/planning_agent.ipynb) implements a planning agent.
+- [`Agents/memory_augmented_agent.ipynb`](./Agents/memory_augmented_agent.ipynb) implements a memory-augmented agent.
+
+### Shared helper modules
+
+The three agent notebooks share these helper modules from the repository root:
 
 - `color_logger.py` provides readable, color-coded notebook output.
 - `mock_llm.py` supplies structured mock responses and an in-memory vector database.
