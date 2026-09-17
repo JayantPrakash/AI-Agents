@@ -1,6 +1,6 @@
 # Exploring AI Agents
 
-This repository contains hands-on notebooks and supporting utilities for learning how AI agents are prompted, deployed, made resilient, and extended with planning and memory. The examples are inspired by *30 Agents Every AI Engineer Must Build* and are designed to run either with OpenAI or, where supported, in a deterministic simulation mode.
+This repository contains hands-on notebooks and supporting utilities for learning how AI agents are prompted, deployed, made resilient, and extended with planning and memory.
 
 ## What is included
 
